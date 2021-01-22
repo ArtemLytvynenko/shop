@@ -3,8 +3,7 @@
         <div class = "v-catalog-item__info">
             <div class = "v-catalog-item__image">
                 <img v-bind:src = " productData.image "
-                     alt = ""
-                >
+                     alt = "">
             </div>
             <div class = "v-catalog-item__description">
                 <h2>{{productData.title}}</h2>
@@ -12,7 +11,7 @@
             </div>
         </div>
         <div class = "v-catalog-item__control">
-            <button @click = "addToCart" class = "add-to-cart">
+            <button @click = "addToCart(productData)" class = "add-to-cart">
                 Add to Cart
             </button>
             <div class = "v-catalog-item-price v-catalog-item-price-font-style">
@@ -24,6 +23,8 @@
     </div>
 </template>
 <script>
+    import {mapActions} from "vuex"
+
     export default {
         name: "v-catalog-item",
         props: {
@@ -39,10 +40,37 @@
         },
         computed: {},
         methods: {
-            addToCart() {
-                this.$emit("add-to-cart", this.productData)
+            ...mapActions([
+                'ADD_TO_CART'
+            ]),
+            addToCart(productData) {
+                let cart = this.localStorage.cart;
+                if (cart.length) {
+                    let isProductExist = false;
+
+                    cart.map(function (item) {
+                        if (item.id === productData.id) {
+                            isProductExist = true;
+                            item.quantity++;
+                            console.log(item)
+                        }
+                    });
+
+                    if (!isProductExist) {
+                        cart.push(productData);
+                        this.localStorage.cart = cart;
+                    }
+                    console.log(cart);
+                } else {
+                    cart.push(productData);
+                    this.localStorage.cart = cart;
+                    console.log('else quantity++')
+                }
             }
         },
+        mounted() {
+            this.$set(this.productData, "quantity", 1);
+        }
     }
 </script>
 <style lang = "scss">
@@ -205,6 +233,5 @@
                 fill: #c4c4c4;
             }
         }
-
     }
 </style>

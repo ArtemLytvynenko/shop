@@ -37,7 +37,7 @@
                 </button>
             </div>
             <div class = "v-cart-item-price v-cart-item-price-font-style">
-                {{numberWithSpaces(price)}}
+                {{numberWithSpaces(getAllPrice)}}
                 <span class = "v-cart-item-price__currency">&nbsp;€</span>
             </div>
             <div class = "v-cart-item-remove" @click = "deleteFromCart">
@@ -99,6 +99,8 @@
     </div>
 </template>
 <script>
+    import {mapGetters} from "vuex"
+
     export default {
         name: "v-cart-item",
         props: {
@@ -113,41 +115,51 @@
                 default(val) {
                     return val;
                 }
+            },
+            index: {
+                type: Number,
+                default() {
+                    return {}
+                }
             }
         },
         data() {
-            return {
-                price: this.productData.price,
-            }
+            return {}
         },
         computed: {
             isIncrementDisable() {
-                return this.productData.quantity == 1 ? true : false;
+                return this.localStorage.cart[this.index].quantity == 1 ? true : false;
             },
             isDecrementDisable() {
-                return this.productData.quantity == 50 ? true : false;
+                return this.localStorage.cart[this.index].quantity == 50 ? true : false;
             },
+            getAllPrice() {
+                return (this.productData.quantity * this.productData.price).toFixed(2);
+            },
+            ...mapGetters([
+                "CART"
+            ])
         },
         methods: {
             deleteFromCart() {
                 this.$emit("deleteFromCart");
             },
             decrementQuantity() {
-                if (this.productData.quantity > 1) {
-                    this.productData.quantity--;
-                    this.price = (this.productData.quantity * this.productData.price).toFixed(2);
+                if (this.localStorage.cart[this.index].quantity > 1) {
+                    let cart = this.localStorage.cart;
+                    cart[this.index].quantity--;
+                    localStorage.cart = JSON.stringify(cart);
                 }
             },
             incrementQuantity() {
-                if (this.productData.quantity < 50) {
-                    this.productData.quantity++;
-                    this.price = (this.productData.quantity * this.productData.price).toFixed(2);
+                if (this.localStorage.cart[this.index].quantity < 50) {
+                    let cart = this.localStorage.cart;
+                    cart[this.index].quantity++;
+                    console.log(cart);
+                    localStorage.cart = JSON.stringify(cart);
                 }
             },
         },
-        mounted() {
-            this.$set(this.productData, "quantity", 1);
-        }
     }
 </script>
 <style lang = "scss">
@@ -362,6 +374,5 @@
                 fill: #c4c4c4;
             }
         }
-
     }
 </style>

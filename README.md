@@ -1,3 +1,5 @@
+Билд проекта в папке dist.
+
 # online_shope
 
 ## Project setup

@@ -3,7 +3,6 @@
         <keep-alive>
             <router-view></router-view>
         </keep-alive>
-        <!--        <p>{{title}}</p>-->
     </div>
 </template>
 <script>
@@ -29,7 +28,7 @@
     }
 </script>
 <style lang = "scss">
-    .v-main-wrapper{
+    .v-main-wrapper {
         margin-bottom: 20px;
     }
 </style>

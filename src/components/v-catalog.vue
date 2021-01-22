@@ -2,8 +2,9 @@
     <div class = "v-catalog">
         <div class = "container">
             <h1>Catalog</h1>
-            <router-link :to = "{name: 'Cart', params: {cartData: CART}}">
-                <div class = "v-catalog__link_to_cart">Cart: {{CART.length}}</div>
+            <router-link :to = "{name: 'Cart'}" class = "v-catalog__link_to_cart">
+                <img :src = "require('../assets/images/shopping_cart.png')" alt = "">
+                <span v-if = "localStorage.cart.length">{{localStorage.cart.length}}</span>
             </router-link>
             <transition-group name = "catalog"
                               tag = "div"
@@ -14,8 +15,7 @@
                         v-for = "(product, index) in PRODUCTS"
                         :key = "product.id"
                         :data-index = "index"
-                        v-bind:product-data = "product"
-                        @add-to-cart = "addToCart" />
+                        :product-data = "product"/>
             </transition-group>
         </div>
     </div>
@@ -36,7 +36,6 @@
         computed: {
             ...mapGetters([
                 "PRODUCTS",
-                "CART"
             ])
         },
         methods: {
@@ -62,24 +61,45 @@
             },
             ...mapActions([
                 "GET_PRODUCTS_FORM_API",
-                "ADD_TO_CART"
             ]),
-            addToCart(data) {
-                this.ADD_TO_CART(data);
-            }
         },
         mounted() {
             this.GET_PRODUCTS_FORM_API();
         }
     }
 </script>
-<style>
+<style lang = "scss">
     .v-catalog__link_to_cart {
         position: fixed;
+        z-index: 2;
+        background-color: #fff;
+        max-width: 55px;
         top: 20px;
         right: 20px;
-        padding: 10px;
-        border: 1px solid red;
         cursor: pointer;
+
+        img {
+            width: 100%;
+        }
+
+        span {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            right: 0;
+            bottom: 0;
+            transform: translate(-50%, -81%);
+            display: block;
+            border-radius: 50%;
+            background: #000;
+            color: #fff;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 2em;
+            height: 2em;
+            font-weight: 600;
+        }
     }
 </style>

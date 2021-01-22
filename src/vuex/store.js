@@ -13,26 +13,10 @@ let store = new Vuex.Store({
         SET_PRODUCTS_TO_STATE: (state, products) => {
             state.products = products;
         },
-        SET_CART: (state, product) => {
-            if (state.cart.length) {
-                let isProductExist = false;
-
-                state.cart.map(function (item) {
-                    if (item.id === product.id) {
-                        isProductExist = true;
-                        item.quantity++
-                    }
-                });
-                if (!isProductExist) {
-                    state.cart.push(product);
-                }
-
-            } else {
-                state.cart.push(product);
-            }
-        },
         DELETE_ELEM_CART: (state, index) => {
-            state.cart.splice(index, 1)
+            let cart = getLocalStorage('cart');
+            cart.splice(index, 1)
+            setLocalStorage('cart', cart);
         }
     },
     actions: {
@@ -52,22 +36,21 @@ let store = new Vuex.Store({
                     return error;
                 })
         },
-        ADD_TO_CART({commit}, product) {
-            commit("SET_CART", product);
-        },
-        DELETE_FROM_CART({commit}, index) {
-            commit("DELETE_ELEM_CART", index);
-        }
     },
     getters: {
         PRODUCTS(state) {
             return state.products;
         },
-        CART(state) {
-            return state.cart;
-        }
     },
 
 });
+
+export function getLocalStorage(key) {
+    return JSON.parse(localStorage.getItem(key));
+}
+
+export function setLocalStorage(key, value) {
+    localStorage.setItem(key, JSON.stringify(value));
+}
 
 export default store;

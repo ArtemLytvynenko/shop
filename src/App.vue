@@ -1,10 +1,8 @@
 <template>
-    <div id="app">
-<!--        <p>Hello Vue!</p>-->
+    <div id = "app">
         <v-main-wrapper/>
     </div>
 </template>
-
 <script>
     import vMainWrapper from './components/v-main-wrapper'
 
@@ -15,8 +13,7 @@
         }
     }
 </script>
-
-<style lang="scss">
+<style lang = "scss">
     #app {
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
@@ -25,7 +22,7 @@
         font-family: 'Open Sans', sans-serif;
         color: #000;
 
-        @media only screen and (max-width: 374px){
+        @media only screen and (max-width: 374px) {
             font-size: 14px;
         }
     }

@@ -7,6 +7,7 @@ import vShipping from "../components/v-shipping"
 Vue.use(Router);
 
 let router = new Router({
+    mode: 'history',
     routes: [
         {
             path: "/",
@@ -22,7 +23,8 @@ let router = new Router({
         {
             path: "/shipping",
             name: "Shipping",
-            component: vShipping
+            component: vShipping,
+            props: true,
         }
     ]
 });
