@@ -16,28 +16,32 @@
                     <input v-model = "form.name.value"
                            :class = "form.name.class"
                            type = "text"
-                           @focusout = "checkName">
+                           @focusout = "checkName"
+                           placeholder = "John Kowalsky">
                 </label>
                 <label>
                     Address*
                     <input v-model = "form.address.value"
                            :class = "form.address.class"
                            type = "text"
-                           @focusout = "checkAddress">
+                           @focusout = "checkAddress"
+                           placeholder = "438 Dark Spurt, San Francisco, CA 94528, USA">
                 </label>
                 <label>
                     Phone
                     <input v-model = "form.phone.value"
                            :class = "form.phone.class"
                            type = "tel"
-                           @focusout = "checkPhone">
+                           @focusout = "checkPhone"
+                           placeholder = "+48 51 6538">
                 </label>
                 <label>
                     Email
                     <input v-model = "form.email.value"
                            :class = "form.email.class"
                            type = "email"
-                           @focusout = "checkEmail">
+                           @focusout = "checkEmail"
+                           placeholder = "moneySwagg@hot.com">
                 </label>
                 <label>
                     Shipping Options
@@ -219,7 +223,7 @@
     }
 
     .error-board-enter-active, .error-board-leave-active {
-        transition: opacity .7s;
+        transition: all .5s;
     }
 
     .error-board-enter, .error-board-leave-to {
